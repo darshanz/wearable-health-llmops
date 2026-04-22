@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+.env.*
+
+# Data
+data/
+wearable-health-llmops/data/
+
+# Models / artifacts
+models/
+artifacts/
+mlruns/
+mlflow.db
+
+# Logs
+*.log
+logs/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Temporary
+tmp/
+*.tmp
