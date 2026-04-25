@@ -8,11 +8,22 @@ from healthllm.api.schemas import (
 )
 from healthllm.llm_client import get_ollama_llm
 from healthllm.predict import predict_readiness
+from fastapi.middleware.cors import CORSMiddleware
+
+
  
 
 MODEL_NAME = os.getenv("OLLAMA_MODEL", "qwen2.5:1.5b")
 
 app = FastAPI(title="Wearable Health LLMOps API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 llm = get_ollama_llm(model=MODEL_NAME)
 

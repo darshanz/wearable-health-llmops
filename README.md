@@ -1,5 +1,28 @@
 # Wearable Health
 
+A health prediction system that estimates daily readiness from wearable sensor features using either a local LLM or classical ML models through a FastAPI backend and interactive web UI.
+
+Initial task: readiness prediction from wearable-derived daily features such as steps, sleep, calories, heart-rate statistics, and mood.
+
+
+![Wearable Health UI](images/screenshot.png)
+
+
+## Features
+
+- Predict readiness from wearable summary features
+- Switch between LLM and classical ML backends
+- FastAPI inference API
+- React frontend for interactive testing
+- Dockerized local deployment
+- Notebook-based data exploration and baseline evaluation
+
+
+## Limitations
+
+This project uses limited training and use of small general purpose language models without finetuning. Hence, it is not claimed to be a software as a medical device or diagnostic tool.
+
+
 ## Datasets
 
 ### PMData
