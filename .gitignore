@@ -36,5 +36,4 @@ logs/
 tmp/
 *.tmp
 
-chroma_data/
 ollama_models/
