@@ -19,6 +19,9 @@ services:
       - OLLAMA_MODEL=qwen2.5:1.5b
     depends_on:
       - ollama-server
+    volumes:
+      - ./models:/app/models
+
 
   ollama-server:
     image: ollama/ollama:latest
@@ -27,3 +30,15 @@ services:
     ports:
       - "11434:11434"
     restart: unless-stopped
+
+
+  train-rf:
+    profiles: ["training"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python -m healthllm.train_rf
+    volumes:
+      - ../data:/data
+      - ./models:/app/models
+      - ./reports:/app/reports

@@ -39,6 +39,12 @@ Dataset downloaded from : [datasets.simula.no](https://datasets.simula.no/pmdata
 
 This project serves a FastAPI app backed by a local Ollama model running in Docker.
 
+### 0. Train ML baseline
+
+```bash
+docker compose --profile training run --rm train-rf
+```
+
 ### 1. Start the services
 
 From the project root:

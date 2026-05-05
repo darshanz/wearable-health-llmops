@@ -1,0 +1,24 @@
+{
+  "target": "readiness",
+  "feature_columns": [
+    "steps_daily",
+    "sleep_minutes",
+    "time_in_bed",
+    "sleep_efficiency",
+    "hr_mean",
+    "hr_min",
+    "hr_max",
+    "hr_std",
+    "resting_heart_rate",
+    "calories_daily",
+    "mood"
+  ],
+  "num_rows": 1729,
+  "num_train_rows": 1383,
+  "num_test_rows": 346,
+  "test_size": 0.2,
+  "random_state": 42,
+  "mae": 1.2678294589161643,
+  "rmse": 1.7208875205289822,
+  "r2": 0.21493408923946378
+}

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Literal
 
 from pydantic import BaseModel
 
@@ -15,6 +15,7 @@ class ReadinessPredictionRequest(BaseModel):
     resting_heart_rate: Optional[float] = None
     calories_daily: Optional[float] = None
     mood: Optional[float] = None
+    model_type: Literal["llm", "random_forest"] = "llm"
 
 
 class ReadinessPredictionResponse(BaseModel):
