@@ -68,19 +68,31 @@ Verify the model is available:
 docker exec -it <ollama_container_name> ollama list
 ```
 
-### 3. API docs
+### 3. MLFLow UI
+
+To run MLFlow UI:
 
 ```
+docker compose --profile tracking up mlflow
+
+```
+MLFlow UI can be accessed at [http://localhost:5000](http://localhost:5000)
+
+### 4. Other endpoints
+
+```
+
+# REST API Docs
+
 http://localhost:8000/docs
-```
 
-### 4. Service Health
 
-```
+# Service Health
+
 http://localhost:8000/health
 ```
 
-### 5. Test readiness prediction
+### 5. Test using curl
 
 Example request:
 

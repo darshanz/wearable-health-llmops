@@ -42,3 +42,14 @@ services:
       - ../data:/data
       - ./models:/app/models
       - ./reports:/app/reports
+
+    
+  mlflow:
+    profiles: ["tracking"]
+    image: ghcr.io/mlflow/mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlruns
+    command: mlflow ui --host 0.0.0.0 --backend-store-uri /mlruns
+

@@ -12,6 +12,12 @@ from sklearn.pipeline import Pipeline
 
 from healthllm.prompts import FEATURE_COLS
 
+try:
+    import mlflow
+    import mlflow.sklearn
+except ImportError:
+    mlflow = None
+
 
 # we alrady did the EDA and know the target column and features to use. so jsut hardcoding here.
 TARGET_COL = "readiness"
@@ -132,6 +138,32 @@ def save_artifacts(model, metrics, feature_importance, model_path, metrics_path,
     feature_importance.to_csv(importance_path, index=False)
 
 
+def log_mlflow_run(model, metrics, importance_path):
+    if mlflow is None:
+        # mlflow is installed from requirements.txt , just in case to be safe.
+        print("MLflow is not installed. Skipping experiment logging.")
+        return
+
+    mlflow.set_experiment("wearable-readiness-rf")
+
+    with mlflow.start_run():
+        mlflow.log_param("model_type", "RandomForestRegressor")
+        mlflow.log_param("target", TARGET_COL)
+        mlflow.log_param("feature_columns", ",".join(FEATURE_COLS))
+        mlflow.log_param("test_size", TEST_SIZE)
+        mlflow.log_param("random_state", RANDOM_STATE)
+        mlflow.log_param("num_rows", metrics["num_rows"])
+        mlflow.log_param("num_train_rows", metrics["num_train_rows"])
+        mlflow.log_param("num_test_rows", metrics["num_test_rows"])
+
+        mlflow.log_metric("mae", metrics["mae"])
+        mlflow.log_metric("rmse", metrics["rmse"])
+        mlflow.log_metric("r2", metrics["r2"])
+
+        mlflow.log_artifact(str(importance_path))
+        mlflow.sklearn.log_model(model, "model")
+
+
 def parse_args():
     root = project_root()
 
@@ -178,6 +210,11 @@ def main():
         metrics_path=args.metrics_path,
         importance_path=args.importance_path,
     )
+    log_mlflow_run(
+        model=model,
+        metrics=metrics,
+        importance_path=args.importance_path,
+    )
 
     print(f"Loaded training data: {args.data_path}")
     print(f"Rows with readiness labels: {metrics['num_rows']}")
@@ -187,6 +224,8 @@ def main():
     print(f"Saved model: {args.model_path}")
     print(f"Saved metrics: {args.metrics_path}")
     print(f"Saved feature importances: {args.importance_path}")
+    if mlflow is not None:
+        print("Logged MLflow experiment: wearable-readiness-rf")
 
 
 if __name__ == "__main__":

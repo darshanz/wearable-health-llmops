@@ -2,22 +2,20 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-const [formData, setFormData] = useState({
-  steps_daily: '12000',
-  sleep_minutes: '420',
-  time_in_bed: '460',
-  sleep_efficiency: '95',
-  hr_mean: '66',
-  hr_min: '48',
-  hr_max: '130',
-  hr_std: '14',
-  resting_heart_rate: '54',
-  calories_daily: '3400',
-  mood: '3',
-  model_type: 'llm',
-})
-
-
+  const [formData, setFormData] = useState({
+    steps_daily: '12000',
+    sleep_minutes: '420',
+    time_in_bed: '460',
+    sleep_efficiency: '95',
+    hr_mean: '66',
+    hr_min: '48',
+    hr_max: '130',
+    hr_std: '14',
+    resting_heart_rate: '54',
+    calories_daily: '3400',
+    mood: '3',
+    model_type: 'llm',
+  })
 
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -34,13 +32,13 @@ const [formData, setFormData] = useState({
   async function handleSubmit(e) {
     e.preventDefault()
     if (!formData.steps_daily || !formData.sleep_minutes || !formData.mood) {
-      setError("Please fill in all required fields.")
+      setError('Please fill in all required fields.')
       return
     }
 
     setLoading(true)
     setError('')
-    setResult(null) 
+    setResult(null)
     try {
       const response = await fetch('http://localhost:8000/predict/readiness', {
         method: 'POST',
@@ -53,12 +51,12 @@ const [formData, setFormData] = useState({
       const data = await response.json()
 
       if (!response.ok) {
-       throw new Error("Please check the input fields.") 
+        throw new Error('Please check the input fields.')
       }
 
       setResult(data)
     } catch (err) {
-      setError(typeof err === "string" ? err : err?.message || "Something went wrong.")
+      setError(typeof err === 'string' ? err : err?.message || 'Something went wrong.')
     } finally {
       setLoading(false)
     }
@@ -70,7 +68,7 @@ const [formData, setFormData] = useState({
         <div>
           <h1>Readiness Prediction Console</h1>
           <p className="subtitle">
-            Estimate readiness using either a local LLM or a classical ML model.
+            Prototype for testing daily readiness predictions from wearable summary data.
           </p>
         </div>
       </header>
@@ -79,7 +77,7 @@ const [formData, setFormData] = useState({
         <section className="panel">
           <div className="panel-header">
             <h2>Inputs</h2>
-            <p>Enter wearable summary features to generate a prediction.</p>
+            <p>Enter one day of features and choose an inference backend.</p>
           </div>
 
           <form className="prediction-form" onSubmit={handleSubmit}>
@@ -243,7 +241,7 @@ const [formData, setFormData] = useState({
         <section className="panel result-panel">
           <div className="panel-header">
             <h2>Prediction</h2>
-            <p>Results from the selected inference backend.</p>
+            <p>Output returned by the API.</p>
           </div>
 
           {!loading && !error && !result && (
