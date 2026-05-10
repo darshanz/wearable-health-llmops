@@ -5,7 +5,7 @@ A health prediction system that estimates daily readiness from wearable sensor f
 Initial task: readiness prediction from wearable-derived daily features such as steps, sleep, calories, heart-rate statistics, and mood.
 
 
-![Wearable Health UI](images/screenshot.png)
+![Wearable Health UI](images/screenshot_ui.png)
 
 
 ## Features
@@ -77,6 +77,9 @@ docker compose --profile tracking up mlflow
 
 ```
 MLFlow UI can be accessed at [http://localhost:5000](http://localhost:5000)
+
+
+![MLFlow UI](images/screenshot_mlflow.png)
 
 ### 4. Other endpoints
 
