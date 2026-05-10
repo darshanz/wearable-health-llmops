@@ -5,17 +5,38 @@ A health prediction system that estimates daily readiness from wearable sensor f
 Initial task: readiness prediction from wearable-derived daily features such as steps, sleep, calories, heart-rate statistics, and mood.
 
 
-![Wearable Health UI](images/screenshot_ui.png)
+![Wearable LLMOPs Architecture](images/architecture_diagram.png)
 
 
-## Features
+## Overview
 
-- Predict readiness from wearable summary features
-- Switch between LLM and classical ML backends
-- FastAPI inference API
-- React frontend for interactive testing
-- Dockerized local deployment
+The system ingests wearable-derived health metrics and generates:
+
+- readiness predictions
+- wellness trend analysis
+- natural-language health summaries
+- personalized recovery insights
+
+The project combines:
+- classical ML prediction pipelines
+- local LLM inference using Ollama
+- FastAPI serving
+- experiment tracking with MLflow
+- Dockerized deployment
 - Notebook-based data exploration and baseline evaluation
+
+
+
+## Problem Statement
+
+Wearable devices generate large volumes of physiological and behavioral data,
+but translating these signals into actionable insights remains challenging.
+
+This project explores how machine learning and local LLMs can be combined to:
+- estimate daily readiness/recovery states
+- summarize health trends
+- provide interpretable recommendations
+- simulate real-world health AI deployment workflows
 
 
 ## Limitations
@@ -52,6 +73,10 @@ From the project root:
 ```bash
 docker compose up --build
 ```
+
+Frontend can be accessed at: http://localhost:5173
+
+![Wearable Health UI](images/screenshot_ui.png)
 
 ### 2. Pull the model inside the Ollama container
 
