@@ -38,18 +38,23 @@ services:
       context: .
       dockerfile: Dockerfile
     command: python -m healthllm.train_rf
+    environment:
+      - MLFLOW_TRACKING_URI=sqlite:////mlflow/mlflow.db
+      - MLFLOW_ARTIFACT_ROOT=/mlruns
     volumes:
       - ../data:/data
       - ./models:/app/models
       - ./reports:/app/reports
+      - ./mlruns:/mlruns
+      - ./mlflow:/mlflow
 
     
   mlflow:
     profiles: ["tracking"]
-    image: ghcr.io/mlflow/mlflow
+    image: ghcr.io/mlflow/mlflow:v3.7.0
     ports:
       - "5000:5000"
     volumes:
       - ./mlruns:/mlruns
-    command: mlflow ui --host 0.0.0.0 --backend-store-uri /mlruns
-
+      - ./mlflow:/mlflow
+    command: mlflow ui --host 0.0.0.0 --backend-store-uri sqlite:////mlflow/mlflow.db --default-artifact-root /mlruns

@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import pickle
 from pathlib import Path
 
@@ -23,6 +24,7 @@ except ImportError:
 TARGET_COL = "readiness"
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
+MLFLOW_EXPERIMENT_NAME = "wearable-readiness-rf"
 
 
 def project_root():
@@ -144,7 +146,14 @@ def log_mlflow_run(model, metrics, importance_path):
         print("MLflow is not installed. Skipping experiment logging.")
         return
 
-    mlflow.set_experiment("wearable-readiness-rf")
+    experiment = mlflow.get_experiment_by_name(MLFLOW_EXPERIMENT_NAME)
+    if experiment is None:
+        mlflow.create_experiment(
+            MLFLOW_EXPERIMENT_NAME,
+            artifact_location=os.getenv("MLFLOW_ARTIFACT_ROOT"),
+        )
+
+    mlflow.set_experiment(MLFLOW_EXPERIMENT_NAME)
 
     with mlflow.start_run():
         mlflow.log_param("model_type", "RandomForestRegressor")
